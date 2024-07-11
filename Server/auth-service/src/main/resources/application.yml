@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: auth-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Auth  # Ensure the database URL is correct
+    username: postgres
+    password: postgres
+  sql:
+    init:
+      mode: always
+  config:
+    import: optional:configserver:http://localhost:8888  # Ensure the config server is running on this URL
+server:
+  port: 8100  # Ensure this port is free and can be used by your application
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka  # Ensure the Eureka server is running on this URL
+
+
