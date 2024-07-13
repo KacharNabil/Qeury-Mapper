@@ -8,3 +8,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: Auth
+    restart: unless-stopped
+  mail-dev:
+    container_name: mail-dev-qm
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
