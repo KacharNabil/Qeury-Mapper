@@ -1,6 +1,6 @@
 spring:
-
   application:
+
     name: auth-service
   datasource:
     url: jdbc:postgresql://localhost:5432/Auth  # Ensure the database URL is correct
@@ -48,4 +48,8 @@ eureka:
       defaultZone: http://localhost:8761/eureka  # Ensure the Eureka server is running on this URL
 springdoc:
   default-consumes-media-type: application/json
-
+application:
+  security:
+    jwt:
+      secret-key: Ab6kWuS1t5G4qxTlB66JpPixALHGY0gP
+      expiration: 8640000
