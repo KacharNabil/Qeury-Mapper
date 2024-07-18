@@ -51,7 +51,7 @@ springdoc:
 application:
   security:
     jwt:
-      secret-key: Ab6kWuS1t5G4qxTlB66JpPixALHGY0gP
+      secret-key: QzNhMzRrV2UzUzF0NUc0cXhUbkI2NkpwUGl4QUxIR1kwZ1BqR0p3NlUzVExkRzRNR0h3NDRtUXdQTzZRUzE
       expiration: 8640000
   mailing:
     frontend:

@@ -23,6 +23,18 @@ public class AuthenticationController {
         service.register(request);
         return ResponseEntity.accepted().build();
     }
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponse> loginUser(
+            @Valid @RequestBody AuthenticationRequest request
+    ){
+        return ResponseEntity.ok(service.authentication(request));
+    }
+    @GetMapping("/activate-account")
+    public void activateAccount(
+            @RequestParam String token
+    ) throws MessagingException {
+        service.activateAccountService(token);
+    }
 
 
 }
