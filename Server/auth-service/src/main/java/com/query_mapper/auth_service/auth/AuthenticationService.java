@@ -1,12 +1,15 @@
 package com.query_mapper.auth_service.auth;
 
 import com.query_mapper.auth_service.email.EmailService;
+import com.query_mapper.auth_service.email.EmailTemplateName;
 import com.query_mapper.auth_service.role.RoleRepository;
 import com.query_mapper.auth_service.user.Token;
 import com.query_mapper.auth_service.user.TokenRepository;
 import com.query_mapper.auth_service.user.User;
 import com.query_mapper.auth_service.user.UserRepository;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +20,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+
+
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
+    @Value("${application.mailing.frontend.activation-url}")
+    private String activationUrl;
 
 
-
-
-    public void register(RegistrationRequest request)
-    {
+    public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
                 .orElseThrow( ()-> new IllegalStateException("role user was not found"));
         var user = User.builder()
@@ -43,9 +47,17 @@ public class AuthenticationService {
         sendValidationEmail(user);
     }
 
-    private void sendValidationEmail(User user) {
+    private void sendValidationEmail(User user) throws MessagingException {
         var newToken = generateAndSaveActivationToken(user);
-        // send email
+        emailService.sendEmail(
+                user.getEmail(),
+                user.getName(),
+                EmailTemplateName.ACTIVATE_ACCOUNT,
+                activationUrl,
+                newToken,
+                "Account activation"
+        );
+
     }
 
     private String generateAndSaveActivationToken(User user) {

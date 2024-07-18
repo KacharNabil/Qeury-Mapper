@@ -85,7 +85,7 @@ public class User implements UserDetails, Principal {
         return enabled;
     }
 
-    @Override
+
     public String getName() {
         return firstname + " " + lastname ;
     }

@@ -1,6 +1,7 @@
 package com.query_mapper.auth_service.auth;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<?> registerUser(
             @Valid @RequestBody RegistrationRequest request
-    ) {
+    ) throws MessagingException {
         service.register(request);
         return ResponseEntity.accepted().build();
     }

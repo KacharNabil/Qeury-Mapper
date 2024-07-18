@@ -3,14 +3,14 @@ spring:
 
     name: auth-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/Auth  # Ensure the database URL is correct
+    url: jdbc:postgresql://localhost:5432/auth
     username: postgres
     password: postgres
   sql:
     init:
       mode: always
   config:
-    import: optional:configserver:http://localhost:8888  # Ensure the config server is running on this URL
+    import: optional:configserver:http://localhost:8888
   servlet:
     multipart:
       max-file-size: 50MB
@@ -22,20 +22,20 @@ spring:
       hibernate:
         format_sql: true
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
     host: localhost
     port: 1025
-    username: query
-    password: query
+    username: nabil
+    password: nabil
     properties:
       mail:
         smtp:
           trust: "*"
         auth: true
         starttls:
-          enable: true
-        connectiontimout: 5000
+          enabled: true
+        connectiontimeout: 5000
         timeout: 3000
         writetimeout: 5000
 server:
@@ -45,7 +45,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka  # Ensure the Eureka server is running on this URL
+      defaultZone: http://localhost:8761/eureka
 springdoc:
   default-consumes-media-type: application/json
 application:
@@ -53,3 +53,6 @@ application:
     jwt:
       secret-key: Ab6kWuS1t5G4qxTlB66JpPixALHGY0gP
       expiration: 8640000
+  mailing:
+    frontend:
+      activation-url: http://localhost:3000/activate-acount
