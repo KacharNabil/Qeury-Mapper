@@ -1,17 +1,29 @@
-version: '3.8'
 services:
-  auth-db:
-    image: postgres:alpine
-    ports:
-      - "5432:5432"
+  postgres:
+    container_name: auth-db
+    image: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: Auth
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: auth
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - spring-auth
     restart: unless-stopped
   mail-dev:
-    container_name: mail-dev-qm
+    container_name: mail-dev-bsn
     image: maildev/maildev
     ports:
       - 1080:1080
       - 1025:1025
+networks:
+  spring-auth:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
