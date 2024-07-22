@@ -6,6 +6,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.HashSet;
@@ -13,20 +14,11 @@ import java.util.Set;
 
 import static org.springframework.http.HttpStatus.*;
 
+
+@ControllerAdvice
 public class ExceptionHandlerGlobal  {
 
-    @ExceptionHandler(DisabledException.class)
-    public ResponseEntity<ExceptionResponse> handleException (LockedException exp) {
-            return  ResponseEntity
-                    .status(UNAUTHORIZED)
-                    .body(
-                            ExceptionResponse.builder()
-                                    .BusinessErrorCode(BusinessErrorCode.ACCOUNT_LOCKED.getCode())
-                                    .BusinessErrorMessage(BusinessErrorCode.ACCOUNT_LOCKED.getMessage())
-                                    .errorMessage(exp.getMessage())
-                                    .build()
-                    );
-    }
+
     @ExceptionHandler(DisabledException.class)
     public ResponseEntity<ExceptionResponse> handleException (DisabledException exp) {
             return  ResponseEntity
@@ -39,6 +31,7 @@ public class ExceptionHandlerGlobal  {
                                     .build()
                     );
     }
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ExceptionResponse> handleException (BadCredentialsException exp) {
             return  ResponseEntity
@@ -51,6 +44,7 @@ public class ExceptionHandlerGlobal  {
                                     .build()
                     );
     }
+
     @ExceptionHandler(MessagingException.class)
     public ResponseEntity<ExceptionResponse> handleException (MessagingException exp) {
             return  ResponseEntity
@@ -80,7 +74,7 @@ public class ExceptionHandlerGlobal  {
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponse> handleException (Exception exp) {
-        
+
         exp.printStackTrace();
         return  ResponseEntity
                     .status(INTERNAL_SERVER_ERROR)
